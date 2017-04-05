@@ -1,0 +1,9 @@
+c:\users\kdonchenko.tkb\documents\visual studio 2017\Projects\FriendsListApp\FriendsListApp\bin\Debug\netcoreapp1.1\FriendsListApp.deps.json
+c:\users\kdonchenko.tkb\documents\visual studio 2017\Projects\FriendsListApp\FriendsListApp\bin\Debug\netcoreapp1.1\FriendsListApp.runtimeconfig.json
+c:\users\kdonchenko.tkb\documents\visual studio 2017\Projects\FriendsListApp\FriendsListApp\bin\Debug\netcoreapp1.1\FriendsListApp.runtimeconfig.dev.json
+c:\users\kdonchenko.tkb\documents\visual studio 2017\Projects\FriendsListApp\FriendsListApp\bin\Debug\netcoreapp1.1\FriendsListApp.dll
+c:\users\kdonchenko.tkb\documents\visual studio 2017\Projects\FriendsListApp\FriendsListApp\bin\Debug\netcoreapp1.1\FriendsListApp.pdb
+c:\users\kdonchenko.tkb\documents\visual studio 2017\Projects\FriendsListApp\FriendsListApp\obj\Debug\netcoreapp1.1\FriendsListApp.AssemblyInfo.cs
+c:\users\kdonchenko.tkb\documents\visual studio 2017\Projects\FriendsListApp\FriendsListApp\obj\Debug\netcoreapp1.1\FriendsListApp.dll
+c:\users\kdonchenko.tkb\documents\visual studio 2017\Projects\FriendsListApp\FriendsListApp\obj\Debug\netcoreapp1.1\FriendsListApp.pdb
+c:\users\kdonchenko.tkb\documents\visual studio 2017\Projects\FriendsListApp\FriendsListApp\obj\Debug\netcoreapp1.1\FriendsListApp.csprojResolveAssemblyReference.cache
