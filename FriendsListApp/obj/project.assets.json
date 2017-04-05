@@ -10763,10 +10763,10 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kdonchenko.TKB\\documents\\visual studio 2017\\Projects\\FriendsListApp\\FriendsListApp\\FriendsListApp.csproj",
+      "projectUniqueName": "C:\\Users\\kdonchenko.TKB\\Documents\\Visual Studio 2017\\Projects\\FriendsListApp\\FriendsListApp\\FriendsListApp.csproj",
       "projectName": "FriendsListApp",
-      "projectPath": "C:\\Users\\kdonchenko.TKB\\documents\\visual studio 2017\\Projects\\FriendsListApp\\FriendsListApp\\FriendsListApp.csproj",
-      "outputPath": "C:\\Users\\kdonchenko.TKB\\documents\\visual studio 2017\\Projects\\FriendsListApp\\FriendsListApp\\obj\\",
+      "projectPath": "C:\\Users\\kdonchenko.TKB\\Documents\\Visual Studio 2017\\Projects\\FriendsListApp\\FriendsListApp\\FriendsListApp.csproj",
+      "outputPath": "C:\\Users\\kdonchenko.TKB\\Documents\\Visual Studio 2017\\Projects\\FriendsListApp\\FriendsListApp\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"

@@ -40,6 +40,28 @@
         <dd>
             @Html.DisplayFor(model => model.FriendType)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Relations)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                </tr>
+                @foreach (var item in Model.Relations)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
     </dl>
 </div>
 <div>

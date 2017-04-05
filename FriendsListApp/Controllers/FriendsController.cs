@@ -34,7 +34,9 @@ namespace FriendsListApp.Controllers
             }
 
             var friend = await _context.Friends
-                .SingleOrDefaultAsync(m => m.ID == id);
+        .Include(s => s.Relations)
+        .AsNoTracking()
+        .SingleOrDefaultAsync(m => m.ID == id);
             if (friend == null)
             {
                 return NotFound();
