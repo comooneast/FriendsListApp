@@ -10,22 +10,23 @@ using FriendsListApp.Models;
 
 namespace FriendsListApp.Controllers
 {
-    public class FriendsController : Controller
+    public class RelationsController : Controller
     {
         private readonly FriendsListContext _context;
 
-        public FriendsController(FriendsListContext context)
+        public RelationsController(FriendsListContext context)
         {
             _context = context;    
         }
 
-        // GET: Friends
+        // GET: Relations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Friends.ToListAsync());
+            var friendsListContext = _context.Relations.Include(r => r.Friend);
+            return View(await friendsListContext.ToListAsync());
         }
 
-        // GET: Friends/Details/5
+        // GET: Relations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,48 +34,49 @@ namespace FriendsListApp.Controllers
                 return NotFound();
             }
 
-            var friend = await _context.Friends
-        .Include(s => s.Relations)
-        .AsNoTracking()
-        .SingleOrDefaultAsync(m => m.ID == id);
-            if (friend == null)
+            var relation = await _context.Relations
+                .Include(r => r.Friend)
+                .SingleOrDefaultAsync(m => m.ID == id);
+            if (relation == null)
             {
                 return NotFound();
             }
 
-            return View(friend);
+            return View(relation);
         }
 
-        // GET: Friends/Create
+        // GET: Relations/Create
         public IActionResult Create()
         {
+            ViewData["FriendID"] = new SelectList(_context.Friends, "ID", "ID");
             return View();
         }
 
-        // POST: Friends/Create
+        // POST: Relations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LastName,FirstMidName,NickName,BirthDate,FriendType")] Friend friend)
+        public async Task<IActionResult> Create([Bind("Date,FriendID,Description")] Relation relation)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Add(friend);
+                    _context.Add(relation);
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
+                ViewData["FriendID"] = new SelectList(_context.Friends, "ID", "ID", relation.FriendID);
             }
-            catch (DbUpdateException)
+           catch (DbUpdateException)
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
-            return View(friend);
+            return View(relation);
         }
 
-        // GET: Friends/Edit/5
+        // GET: Relations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,93 +84,97 @@ namespace FriendsListApp.Controllers
                 return NotFound();
             }
 
-            var friend = await _context.Friends.SingleOrDefaultAsync(m => m.ID == id);
-            if (friend == null)
+            var relation = await _context.Relations.SingleOrDefaultAsync(m => m.ID == id);
+            if (relation == null)
             {
                 return NotFound();
             }
-            return View(friend);
+            ViewData["FriendID"] = new SelectList(_context.Friends, "ID", "ID", relation.FriendID);
+            return View(relation);
         }
 
-        // POST: Friends/Edit/5
+        // POST: Relations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(int? id)
         {
-            if (id == null)
+            if (id ==null)
             {
                 return NotFound();
             }
-            var friendToUpdate = await _context.Friends.SingleOrDefaultAsync(s => s.ID == id);
-            if (await TryUpdateModelAsync<Friend>(
-                friendToUpdate,
+            var relationToUpdate = await _context.Relations.SingleOrDefaultAsync(s => s.ID == id);
+            if (await TryUpdateModelAsync<Relation>(
+                relationToUpdate,
                 "",
-                s => s.BirthDate, s => s.FirstMidName, s => s.FriendType, s => s.LastName, s => s.NickName))
+                s => s.Date, s => s.Description, s => s.FriendID))
             {
                 try
                 {
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
-                catch (DbUpdateException /* ex */)
+                catch (DbUpdateConcurrencyException)
                 {
                     //Log the error (uncomment ex variable name and write a log.)
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
+                return RedirectToAction("Index");
             }
-            return View(friendToUpdate);
+            ViewData["FriendID"] = new SelectList(_context.Friends, "ID", "ID", relationToUpdate.FriendID);
+            return View(relationToUpdate);
         }
 
-        // GET: Friends/Delete/5
-        public async Task<IActionResult> Delete(int? id, bool? saveChangesError=false)
+        // GET: Relations/Delete/5
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var friend = await _context.Friends
+            var relation = await _context.Relations
                 .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (saveChangesError.GetValueOrDefault())
+            if (relation == null)
             {
-                ViewData["ErrorMessage"] = "Delete failed. Try again, and if the problem persists see your system administrator.";
+                return NotFound();
             }
 
-            return View(friend);
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["ErrorMessage"] ="Delete failed. Try again, and if the problem persists see your system administrator.";
+            }
+
+            return View(relation);
         }
 
-        // POST: Friends/Delete/5
+        // POST: Relations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var friend = await _context.Friends
-                .AsNoTracking()
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (friend==null)
+            var relation = await _context.Relations.AsNoTracking().SingleOrDefaultAsync(m => m.ID == id);
+            if (relation == null)
             {
                 return RedirectToAction("Index");
             }
             try
             {
-                Friend friendToDelete = new Friend() { ID = id };
-                _context.Entry(friendToDelete).State = EntityState.Deleted;
+                _context.Relations.Remove(relation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             catch (DbUpdateException)
             {
-                //Log the error (uncomment ex variable name and write a log.)
                 return RedirectToAction("Delete", new { id = id, saveChangesError = true });
             }
         }
 
-        private bool FriendExists(int id)
+        private bool RelationExists(int id)
         {
-            return _context.Friends.Any(e => e.ID == id);
+            return _context.Relations.Any(e => e.ID == id);
         }
     }
 }
