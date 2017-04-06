@@ -31,6 +31,7 @@ namespace FriendsListApp
         {
             // Add framework services.
             services.AddDbContext<FriendsListContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<UserContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
         }
 
@@ -51,6 +52,14 @@ namespace FriendsListApp
             }
 
             app.UseStaticFiles();
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookies",
+                LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
 
             app.UseMvc(routes =>
             {

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FriendsListApp.Data;
 using FriendsListApp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FriendsListApp.Controllers
 {
+    [Authorize]
     public class FriendsController : Controller
     {
         private readonly FriendsListContext _context;
